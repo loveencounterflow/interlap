@@ -1,20 +1,20 @@
+
+
+
+# InterLap: Discontinuous Ranges
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Discontinuous Ranges](#discontinuous-ranges)
-  - [Data Structure](#data-structure)
-  - [Coding Principles](#coding-principles)
-  - [Related](#related)
+- [Data Structures](#data-structures)
+- [Coding Principles](#coding-principles)
+- [Related](#related)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
-
-
-# Discontinuous Ranges
-
-## Data Structure
+## Data Structures
 
 * `Interlap`, a derivative of JS `Array`
 * IOW a list
