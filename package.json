@@ -1,6 +1,6 @@
 {
   "name": "interlap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "unions and differences of discontinuous (segmented) ranges (sets of intervals)",
   "main": "lib/main.js",
   "scripts": {
