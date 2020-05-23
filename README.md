@@ -37,7 +37,7 @@
 	* in segments of `Interlap` instances it always suffices to compare segments for inequality of their
 		lower bounds
 
-* Discontinuous ranges are expresed by `Interlap` instances ('interlaps')
+* Discontinuous ranges are expressed by `Interlap` instances ('interlaps')
 * that contain `Segment` instances
 * they are basically just lists (`Array` instances) but
   * validated (segments must be pairs of numbers and so on) and
@@ -60,7 +60,7 @@
 * duties of instances:
 	* carriers of a few standard attributes (`d.size` in this case)
 	* serve as caching mechanism (instances may hold references to objects that implement functionalities)
-	* 'being an instance of a class' serves as 'product certification labels'; given we allow only valid
+	* 'being an instance of a class' serves as 'product certification label'; given we allow only valid
 	  inputs to build expected structures (and assuming absence of bugs), then—since instances are frozen—we
 	  can be sure at any later point in time that a `d` for which `d instanceof D` holds is also valid; there
 	  is no change management
@@ -70,6 +70,5 @@
 * drange (used to perform range arithmetics)
 * @scotttrinh/number-ranges
 * drange-immutable
-
 
 
