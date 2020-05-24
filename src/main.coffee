@@ -98,18 +98,23 @@ class Interlap  extends Array
     Object.defineProperty @, 'last',    get: -> @[ @length - 1  ] ? null
     Object.defineProperty @, '_drange', get: -> drange
     #.......................................................................................................
-    if segments instanceof DRange
-      drange    = segments
-    else if segments instanceof Interlap
-      drange    = segments._drange
-    else if Array.isArray segments
-      drange    = new DRange()
-      segments  = [ segments[ 0 ]..., ] if segments.length is 1 and isa.generator segments[ 0 ]
-      for segment in segments
-        validate.interlap_segment_as_list segment unless segment instanceof Segment
-        drange.add segment...
-    else
-      throw new Error "^445^ unable to instantiate from a #{type_of segments} (#{rpr segments})"
+    switch arity = arguments.length
+      when 0
+        drange = new DRange()
+      when 1
+        if segments instanceof DRange
+          drange    = segments
+        else if segments instanceof Interlap
+          drange    = segments._drange
+        else if Array.isArray segments
+          drange    = new DRange()
+          segments  = [ segments[ 0 ]..., ] if segments.length is 1 and isa.generator segments[ 0 ]
+          for segment in segments
+            validate.interlap_segment_as_list segment unless segment instanceof Segment
+            drange.add segment...
+        else
+          throw new Error "^445^ unable to instantiate from a #{type_of segments} (#{rpr segments})"
+      else throw new Error "^443^ expected 1 argument, got #{arity}"
     #.......................................................................................................
     MAIN._apply_segments_from_drange @, drange
     return freeze @
