@@ -71,4 +71,15 @@
 * [`@scotttrinh/number-ranges`](https://www.npmjs.com/package/@scotttrinh/number-ranges)
 * drange-immutable
 
+<!--
+
+does it make sense to allow
+* codepoints as strings
+* arbitrary strings? strings do have a total ordering, so why not? but probably no use case, so rather
+	use strings for single codepoints only
+
+
+
+
+ -->
 
