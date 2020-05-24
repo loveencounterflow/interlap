@@ -80,7 +80,7 @@ class Segment extends Array
   #---------------------------------------------------------------------------------------------------------
   _size_of:           -> @[ 1 ] - @[ 0 ] + 1
   # @from:    ( P...  ) -> new Segment P...
-  @from:  -> throw new Error "^778^ `Segment.from()` is not implemented"
+  @from:  -> throw new Error "^7324^ `Segment.from()` is not implemented"
 
 
 #===========================================================================================================
@@ -146,14 +146,14 @@ apply_drange = ( me, drange ) ->
   switch ( type = type_of me )
     when 'segment'  then return [ me..., ]
     when 'interlap' then return ( [ s..., ] for s in me )
-  throw new Error "^3445^ expected a segment or an interlap, got a #{type}"
+  throw new Error "^7328^ expected a segment or an interlap, got a #{type}"
 
 #-----------------------------------------------------------------------------------------------------------
 @as_numbers = ( me ) ->
   switch ( type = type_of me )
     when 'segment'  then return [ me.lo .. me.hi ]
     when 'interlap' then return ( [ s.lo .. s.hi ] for s in me ).flat 1
-  throw new Error "^3447^ expected a segment or an interlap, got a #{type}"
+  throw new Error "^7329^ expected a segment or an interlap, got a #{type}"
 
 #-----------------------------------------------------------------------------------------------------------
 @includes = ( me, other ) ->
@@ -161,7 +161,7 @@ apply_drange = ( me, drange ) ->
   switch type = type_of other
     when 'float'    then return @_includes_float    me, other
     when 'segment'  then return @_includes_segment  me, other
-    else throw new Error "^783^ expected a number, got a #{type}"
+    else throw new Error "^7330^ expected a number, got a #{type}"
   return false
 
 #-----------------------------------------------------------------------------------------------------------
@@ -200,7 +200,7 @@ apply_drange = ( me, drange ) ->
 
 #-----------------------------------------------------------------------------------------------------------
 @intersection = ( me, others... ) ->
-  throw new Error "^776^ not implemented"
+  throw new Error "^7331^ not implemented"
   # me._drange.intersect()
 
 # #-----------------------------------------------------------------------------------------------------------
@@ -216,12 +216,6 @@ apply_drange = ( me, drange ) ->
   return -1 if a[ 1 ] < b[ 1 ]
   return +1 if a[ 1 ] > b[ 1 ]
   return  0
-
-#-----------------------------------------------------------------------------------------------------------
-@_apply_segments_from_drange = ( me, drange ) ->
-  segments = MAIN._sort ( ( new Segment [ r.low, r.high, ] ) for r in drange.ranges )
-  me.push segment for segment in segments ### TAINT use `splice()` ###
-  return me
 
 
 ############################################################################################################
