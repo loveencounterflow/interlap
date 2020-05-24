@@ -52,6 +52,10 @@
 
 ## Coding Principles
 
+*Note*—The below are some points I have been wanting to write down for some time; they are rather about the
+implementation pattern used in `interlap/main.coffee` in general rather than `Inteerlap` objects in
+particular, though `lasp` and `segments` are used as examples.
+
 * Classes, instances are largely 'passive'
 * interesting methods all in stateless library with pure functions
 * shallow extensions of standard types (`Array` in this case) **Note** this will probably change in a future
@@ -64,6 +68,17 @@
   `{ lo: 19969, hi: 40943, }`, `{ first: 19969, last: 40943, }`, `'U+4e01-U+9fff'`, `/[丁-鿯]/`. There's no
   one true and unique representation, although there may be some preferred form(s) and some forms that are
   only supported by some methods
+* in case users should wish to use methods like `[].join()`, `[].map()`, `[].reduce()` and so forth on
+  `segments` or `laps`, they should be aware that for all their arrayish listfulness, `segments` and `laps`
+  are not lists. From the outset, none of the mutating methods (`[].sort()`, `[].push()`) can be used with
+  their usual semantics because `segments` and `laps` are immutable. In the case of `segments`,
+  `segment.push()` does not make sense because each segment must always have exactly to elements; that we
+  have decided to implemented as elements with indexes `0` and `1` is an implementation detail. In the case
+  of `laps`, `lap.push segment` is conceivable and could return a new lap—but that should be no different
+  from the output of `LAP.union lap, segemt` and would thus add duplication instead of usefulness to the
+  API. Moreover, while `LAP.union()` is a somewhat unfortunate name for a function (since it is a noun, not
+  a verb), `lap.push()` is considerably worse (it looks like it could mutate `lap`, which it can't, and it
+  sounds like it would takc something to the end of `lap`, which it won't).
 * validation by (implicit) instantiation
 * instances are immutable (frozen)
 * duties of instances:
