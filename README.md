@@ -53,7 +53,7 @@
 ## Coding Principles
 
 *Note*—The below are some points I have been wanting to write down for some time; they are rather about the
-implementation pattern used in `interlap/main.coffee` in general rather than `Inteerlap` objects in
+implementation pattern used in `interlap/main.coffee` in general rather than `Interlap` objects in
 particular, though `lasp` and `segments` are used as examples.
 
 * Classes, instances are largely 'passive'
@@ -91,7 +91,7 @@ particular, though `lasp` and `segments` are used as examples.
 
 ## Related
 
-* drange (used to perform range arithmetics)
+* drange (used to perform InterLap range arithmetics)
 * [`@scotttrinh/number-ranges`](https://www.npmjs.com/package/@scotttrinh/number-ranges)
 * drange-immutable
 
