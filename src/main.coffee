@@ -216,19 +216,25 @@ sort_interlap = ( interlap ) -> interlap.sort ( a, b ) ->
   throw new Error "^7331^ not implemented"
   # me._drange.intersect()
 
-# #-----------------------------------------------------------------------------------------------------------
-# @_drange_as_interlap  = ( drange ) ->
-#   return freeze @_sort Interlap.from ( ( new Segment [ r.low, r.high, ] ) for r in drange.ranges )
+#-----------------------------------------------------------------------------------------------------------
+@as_unicode_range = ( me, P... ) ->
+  type        = type_of me
+  method_name = "#{type}_as_unicode_range"
+  throw new Error "^4445^ no method named #{rpr method_name}" unless ( method = @[ method_name ] )?
+  return method.call @, me, P...
 
 #-----------------------------------------------------------------------------------------------------------
-@_sort = ( interlap ) -> interlap.sort ( a, b ) ->
-  ### NOTE correct but only the first two terms are ever needed ###
-  return -1 if a[ 0 ] < b[ 0 ]
-  return +1 if a[ 0 ] > b[ 0 ]
-  ### could raise an internal error if we get here since the above two comparsions must always suffice ###
-  return -1 if a[ 1 ] < b[ 1 ]
-  return +1 if a[ 1 ] > b[ 1 ]
-  return  0
+@segment_as_unicode_range = ( me ) ->
+  validate.segment me
+  lo = ( me.lo.toString 16 ).padStart 4, '0'
+  hi = ( me.hi.toString 16 ).padStart 4, '0'
+  return "U+#{lo}-U+#{hi}"
+
+#-----------------------------------------------------------------------------------------------------------
+@interlap_as_unicode_range = ( me, joiner = ',' ) ->
+  validate.interlap me
+  validate.text     joiner
+  return ( @segment_as_unicode_range s for s in me ).join ','
 
 
 ############################################################################################################
