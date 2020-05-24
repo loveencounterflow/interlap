@@ -191,6 +191,11 @@ class Interlap extends Array
       drange  = drange.subtract other...
   return new Interlap drange
 
+#-----------------------------------------------------------------------------------------------------------
+@intersection = ( me, others... ) ->
+  throw new Error "^776^ not implemented"
+  # me._drange.intersect()
+
 # #-----------------------------------------------------------------------------------------------------------
 # @_drange_as_interlap  = ( drange ) ->
 #   return freeze @_sort Interlap.from ( ( new Segment [ r.low, r.high, ] ) for r in drange.ranges )
