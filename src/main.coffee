@@ -142,6 +142,32 @@ class Interlap  extends Array
   throw new Error "^3445^ expected a segment or an interlap, got a #{type}"
 
 #-----------------------------------------------------------------------------------------------------------
+@as_numbers = ( me ) ->
+  switch ( type = type_of me )
+    when 'segment'  then return [ me.lo .. me.hi ]
+    when 'interlap' then return ( [ s.lo .. s.hi ] for s in me ).flat 1
+  throw new Error "^3447^ expected a segment or an interlap, got a #{type}"
+
+#-----------------------------------------------------------------------------------------------------------
+@includes = ( me, other ) ->
+  me      = new Interlap me unless me instanceof Interlap
+  switch type = type_of other
+    when 'float'    then return @_includes_float    me, other
+    when 'segment'  then return @_includes_segment  me, other
+    else throw new Error "^783^ expected a number, got a #{type}"
+  return false
+
+#-----------------------------------------------------------------------------------------------------------
+@_includes_float = ( me, other ) ->
+  ### TAINT can stop iteration as soon as s.lo > other ###
+  return me.some ( s ) -> s.lo <= other <= s.hi
+
+#-----------------------------------------------------------------------------------------------------------
+@_includes_segment = ( me, other ) ->
+  ### TAINT can stop iteration as soon as s.lo > other ###
+  return me.some ( s ) -> ( s.lo <= other.lo <= s.hi ) and ( s.lo <= other.hi <= s.hi )
+
+#-----------------------------------------------------------------------------------------------------------
 @union = ( me, others... ) ->
   me      = new Interlap me unless me instanceof Interlap
   drange  = me._drange
