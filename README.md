@@ -10,6 +10,7 @@
 - [Data Structures](#data-structures)
 - [Coding Principles](#coding-principles)
 - [Related](#related)
+- [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -53,8 +54,16 @@
 
 * Classes, instances are largely 'passive'
 * interesting methods all in stateless library with pure functions
-* shallow extensions of standard types (`Array` in this case)
-* therefore can always be replaced w/ standard objects
+* shallow extensions of standard types (`Array` in this case) **Note** this will probably change in a future
+  version; see [To Do](#to-do), below
+* <strike>therefore can always be replaced w/ standard objects</strike> conversion from and to standard
+  types possible (`segments` can be turned into lists of two elements `[ s.lo, s.hi, ]`; `laps`: can be
+  turned into (possibly empty) lists of `segments`)
+* observe that *multiple* meaningful and information preserving casts *per target data type* are always
+  possible, for example, `new Segment [ 0x4e01, 0x9fff, ]` could be turned into any of `[ 19969, 40943, ]`,
+  `{ lo: 19969, hi: 40943, }`, `{ first: 19969, last: 40943, }`, `'U+4e01-U+9fff'`, `/[丁-鿯]/`. There's no
+  one true and unique representation, although there may be some preferred form(s) and some forms that are
+  only supported by some methods
 * validation by (implicit) instantiation
 * instances are immutable (frozen)
 * duties of instances:
@@ -71,15 +80,20 @@
 * [`@scotttrinh/number-ranges`](https://www.npmjs.com/package/@scotttrinh/number-ranges)
 * drange-immutable
 
+## To Do
+
+* [ ] implement `intersection()`
+* [ ] consider to not base `Segment`, `Interlap` on `Array` (instead, use no particular class or else maybe
+  `Multimix`); this would rid the API of all the spurious methods tacked onto what is intended to be pure
+  data objects; observe that ` d = new Interlap(); d.push 42` will throw an error *in strict mode* because
+  `d` is frozen; other methods might return surprising/meaningless results; manipulation of `laps`,
+  `segments` at any rate intended to happen through library functions, not object methods
+
 <!--
 
 does it make sense to allow
 * codepoints as strings
 * arbitrary strings? strings do have a total ordering, so why not? but probably no use case, so rather
 	use strings for single codepoints only
-
-
-
-
  -->
 
