@@ -68,7 +68,7 @@
 ## Related
 
 * drange (used to perform range arithmetics)
-* @scotttrinh/number-ranges
+* [`@scotttrinh/number-ranges`](https://www.npmjs.com/package/@scotttrinh/number-ranges)
 * drange-immutable
 
 
