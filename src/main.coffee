@@ -29,7 +29,9 @@ LFT                       = require 'letsfreezethat'
 # { lets
 #   freeze }                = LFT
 freeze                    = Object.freeze
+Multimix                  = require 'multimix'
 MAIN                      = @
+
 
 #===========================================================================================================
 # TYPES
@@ -159,18 +161,22 @@ class Interlap  extends Array
   return +1 if a[ 1 ] > b[ 1 ]
   return  0
 
-#---------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------
 @_apply_segments_from_drange = ( me, drange ) ->
   segments = MAIN._sort ( ( new Segment [ r.low, r.high, ] ) for r in drange.ranges )
   me.push segment for segment in segments ### TAINT use `splice()` ###
   return me
 
-#-----------------------------------------------------------------------------------------------------------
+
+############################################################################################################
 @Interlap   = Interlap
-@Segment  = Segment
+@Segment    = Segment
 
+### TAINT consider to use less conflicting name ###
+class InterLapLib extends Multimix
+  @include MAIN, { overwrite: false, }
 
-
+module.exports = INTERLAP = new InterLapLib()
 
 
 
