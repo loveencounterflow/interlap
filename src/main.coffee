@@ -110,6 +110,9 @@ class Interlap extends Array
       when 'segment'
         drange    = new DRange()
         drange.add segments...
+      # #.....................................................................................................
+      # when 'float'
+      #   drange = new DRange segments, segments
       #.....................................................................................................
       when 'list'
         drange    = new DRange()
