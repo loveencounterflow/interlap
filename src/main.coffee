@@ -98,34 +98,41 @@ class Interlap extends Array
     Object.defineProperty @, 'last',    get: -> @[ @length - 1  ] ? null
     Object.defineProperty @, '_drange', get: -> drange
     #.......................................................................................................
-    switch arity = arguments.length
-      when 0
-        drange = new DRange()
-      when 1
-        if segments instanceof DRange
-          drange    = segments
-        else if segments instanceof Interlap
-          drange    = segments._drange
-        else if segments instanceof Segment
-          drange    = new DRange()
-          drange.add segments...
-        else if Array.isArray segments
-          drange    = new DRange()
-          segments  = [ segments[ 0 ]..., ] if segments.length is 1 and isa.generator segments[ 0 ]
-          for segment in segments
-            validate.interlap_segment_as_list segment unless segment instanceof Segment
-            drange.add segment...
-        else throw new Error "^445^ unable to instantiate from a #{type_of segments} (#{rpr segments})"
-      else throw new Error "^443^ expected 1 argument, got #{arity}"
+    return apply_drange @, new DRange() if ( arity = arguments.length ) is 0
+    throw new Error "^7326^ expected 1 argument, got #{arity}" unless arity is 1
+    return apply_drange @, drange = segments if segments instanceof DRange
     #.......................................................................................................
-    MAIN._apply_segments_from_drange @, drange
-    return freeze @
+    switch type = type_of segments
+      #.....................................................................................................
+      when 'interlap'
+        drange = segments._drange
+      #.....................................................................................................
+      when 'segment'
+        drange    = new DRange()
+        drange.add segments...
+      #.....................................................................................................
+      when 'list'
+        drange    = new DRange()
+        segments  = [ segments[ 0 ]..., ] if segments.length is 1 and isa.generator segments[ 0 ]
+        for segment in segments
+          validate.interlap_segment_as_list segment unless segment instanceof Segment
+          drange.add segment...
+      #.....................................................................................................
+      else throw new Error "^7325^ unable to instantiate from a #{type_of segments} (#{rpr segments})"
+    #.......................................................................................................
+    return apply_drange @, drange
 
   #---------------------------------------------------------------------------------------------------------
   _size_of:           -> @reduce ( ( sum, segment ) -> sum + segment.size ), 0
-  @from:  -> throw new Error "^776^ `Interlap.from()` is not implemented"
+  @from:  -> throw new Error "^7327^ `Interlap.from()` is not implemented"
   # @from:  -> ( P...  ) -> MAIN.interlap_from_segments P...
   # @from:    ( P...  ) -> new Interlap P...
+
+#-----------------------------------------------------------------------------------------------------------
+apply_drange = ( me, drange ) ->
+  segments = MAIN._sort ( ( new Segment [ r.low, r.high, ] ) for r in drange.ranges )
+  me.push segment for segment in segments ### TAINT use `splice()` ###
+  return freeze me
 
 
 #===========================================================================================================
