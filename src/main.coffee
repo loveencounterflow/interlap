@@ -143,13 +143,24 @@ class Interlap  extends Array
 @union = ( me, others... ) ->
   me      = new Interlap me unless me instanceof Interlap
   drange  = me._drange
-  drange  = drange.add segment... for segment in me
   for other in others
     if other instanceof Interlap
       drange = drange.add segment... for segment in other
     else
       other   = new Segment other unless other instanceof Segment
       drange  = drange.add other...
+  return new Interlap drange
+
+#-----------------------------------------------------------------------------------------------------------
+@difference = ( me, others... ) ->
+  me      = new Interlap me unless me instanceof Interlap
+  drange  = me._drange
+  for other in others
+    if other instanceof Interlap
+      drange = drange.subtract segment... for segment in other
+    else
+      other   = new Segment other unless other instanceof Segment
+      drange  = drange.subtract other...
   return new Interlap drange
 
 # #-----------------------------------------------------------------------------------------------------------
