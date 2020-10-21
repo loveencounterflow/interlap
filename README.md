@@ -48,7 +48,8 @@
   * we can turn *some* suitably shaped lists into interlaps
   * therefore, although interlaps look like lists and quack like lists, they are not just lists
   * hence, `equals my_list, my_interlap` must always be `false`
-  * at best, `equals ( as_list my_interlap ), my_list` can hold
+  * at best, `equals ( as_list my_interlap ), my_list` or some kind of `is_equivalent my_list, my_interlap`
+    (with a suitably defined `is_equivalent()` method) can hold
 
 ## Coding Principles
 
