@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/loveencounterflow/interlap#readme",
   "dependencies": {
-    "cnd": "^9.0.0",
-    "drange": "^2.0.0",
-    "intertype": "^7.0.1",
-    "letsfreezethat": "^2.2.5",
-    "multimix": "^4.0.0"
+    "cnd": "^9.2.1",
+    "drange": "^2.0.1",
+    "intertype": "^7.4.0",
+    "letsfreezethat": "^3.0.3",
+    "multimix": "^4.1.0"
   }
 }
