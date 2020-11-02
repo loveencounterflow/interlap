@@ -58,8 +58,8 @@ declare 'interlap_interlap_as_list', tests:
 declare 'interlap_segment_as_list', tests:
   "must be a list":                                         ( x ) -> @isa.list x
   "length must be 2":                                       ( x ) -> x.length is 2
-  "lo boundary must be an infnumber":                       ( x ) -> isa.infnumber x[ 0 ]
-  "hi boundary must be an infnumber":                       ( x ) -> isa.infnumber x[ 1 ]
+  "lo boundary must be an infloat":                         ( x ) -> isa.infloat x[ 0 ]
+  "hi boundary must be an infloat":                         ( x ) -> isa.infloat x[ 1 ]
   "lo boundary must be less than or equal to hi boundary":  ( x ) -> x[ 0 ] <= x[ 1 ]
 
 
